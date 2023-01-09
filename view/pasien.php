@@ -35,9 +35,9 @@
       </thead>
       <tbody>
         <?php
-
         $query = 'SELECT * FROM pasien';
         $result = mysqli_query($conn, $query);
+
         if ($result) {
           while ($row = mysqli_fetch_array($result)) { ?>
             <tr class="bg-white border-b dark:bg-gray-900 dark:border-gray-700">

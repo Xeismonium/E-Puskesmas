@@ -45,6 +45,7 @@ if (isset($_POST['insert-pasien'])) {
 }
 
 if (isset($_POST['insert-rekam-medis'])) {
+    $id_pasien = htmlspecialchars(trim($_POST['id_pasien']));
     $tanggal_pemeriksaan = htmlspecialchars(trim($_POST['tanggal_pemeriksaan']));
     $diagnosa = htmlspecialchars(trim($_POST['diagnosa']));
     $hasil_laboratorium = htmlspecialchars(trim($_POST['hasil_laboratorium']));
@@ -65,7 +66,7 @@ if (isset($_POST['insert-rekam-medis'])) {
         </script>
         ";
     } else {
-        mysqli_query($conn, "INSERT INTO rekam_medis (tanggal_pemeriksaan, diagnosa, hasil_laboratorium) VALUES ('$tanggal_pemeriksaan', '$diagnosa', '$hasil_laboratorium')");
+        mysqli_query($conn, "INSERT INTO rekam_medis (id_pasien, tanggal_pemeriksaan, diagnosa, hasil_laboratorium) VALUES ('$id_pasien', '$tanggal_pemeriksaan', '$diagnosa', '$hasil_laboratorium')");
         echo "
         <script>
         setTimeout(function() {
