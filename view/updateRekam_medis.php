@@ -7,9 +7,13 @@
         <?php
         require '../config/connect.php';
         $idRekamMedis = $_GET['id_rekam_medis'];
-        $getRekamMedis = mysqli_query($conn, "SELECT * FROM rekam_medis WHERE id_rekam_medis = '$idRekamMedis'");
+        $getRekamMedis = mysqli_query($conn, "SELECT rm.*, p.nama FROM rekam_medis rm INNER JOIN pasien p ON rm.id_pasien = p.id_pasien WHERE id_rekam_medis = '$idRekamMedis'" );
         $dataRekamMedis = mysqli_fetch_array($getRekamMedis);
         ?>
+        <div class="mb-6">
+            <label for="name" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Nama</label>
+            <input value="<?= $dataRekamMedis['nama'] ?>" type="text" name="name" id="name" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" required readonly />
+        </div>
         <div class="mb-6">
             <input name="id_rekam_medis" value="<?= $dataRekamMedis['id_rekam_medis']; ?>" hidden>
             <label for="tanggal_pemeriksaan" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Tanggal Pemeriksaan
