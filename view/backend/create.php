@@ -252,6 +252,7 @@ if (isset($_POST['insert-petugas-kesehatan'])) {
 }
 
 if (isset($_POST['insert-anamnesis'])) {
+    $id_pasien = htmlspecialchars(trim($_POST['id_pasien']));
     $riwayat_penyakit = htmlspecialchars(trim($_POST['riwayat_penyakit']));
     $obat_dikonsumsi = htmlspecialchars(trim($_POST['obat_dikonsumsi']));
     $alergi_obat = htmlspecialchars(trim($_POST['alergi_obat']));
@@ -272,7 +273,7 @@ if (isset($_POST['insert-anamnesis'])) {
         </script>
         ";
     } else {
-        mysqli_query($conn, "INSERT INTO anamnesis (riwayat_penyakit, obat_dikonsumsi, alergi_obat) VALUES ('$riwayat_penyakit', '$obat_dikonsumsi', '$alergi_obat')");
+        mysqli_query($conn, "INSERT INTO anamnesis (id_pasien, riwayat_penyakit, obat_dikonsumsi, alergi_obat) VALUES ('$id_pasien', '$riwayat_penyakit', '$obat_dikonsumsi', '$alergi_obat')");
         echo "
         <script>
         setTimeout(function() {

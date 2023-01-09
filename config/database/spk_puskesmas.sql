@@ -3,9 +3,9 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Jan 06, 2023 at 03:58 PM
--- Server version: 10.4.27-MariaDB
--- PHP Version: 8.2.0
+-- Generation Time: Jan 09, 2023 at 02:48 PM
+-- Server version: 10.4.25-MariaDB
+-- PHP Version: 8.1.10
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 START TRANSACTION;
@@ -18,7 +18,7 @@ SET time_zone = "+00:00";
 /*!40101 SET NAMES utf8mb4 */;
 
 --
--- Database: `spk_puskesmas`
+-- Database: `epuskesmas`
 --
 
 -- --------------------------------------------------------
@@ -29,10 +29,11 @@ SET time_zone = "+00:00";
 
 CREATE TABLE `anamnesis` (
   `id_anamnesis` int(11) NOT NULL,
+  `id_pasien` int(15) NOT NULL,
   `riwat_penyakit` varchar(256) NOT NULL,
   `obat_dikonsumsi` varchar(256) NOT NULL,
   `alergi_obat` varchar(256) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 -- --------------------------------------------------------
 
@@ -45,7 +46,7 @@ CREATE TABLE `dokter` (
   `nama` varchar(256) NOT NULL,
   `spesialisasi` varchar(256) NOT NULL,
   `jam_kerja` time NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 -- --------------------------------------------------------
 
@@ -58,7 +59,7 @@ CREATE TABLE `obat` (
   `nama_obat` varchar(256) NOT NULL,
   `harga` int(11) NOT NULL,
   `efek_samping` varchar(256) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 -- --------------------------------------------------------
 
@@ -73,7 +74,7 @@ CREATE TABLE `pasien` (
   `jenis_kelamin` varchar(15) NOT NULL,
   `nomor_telepon` varchar(13) NOT NULL,
   `alamat` varchar(256) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
 -- Dumping data for table `pasien`
@@ -98,7 +99,7 @@ CREATE TABLE `penyakit` (
   `deskripsi` varchar(256) NOT NULL,
   `gejala` varchar(256) NOT NULL,
   `tindakan_pengobatan` varchar(256) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 -- --------------------------------------------------------
 
@@ -111,7 +112,7 @@ CREATE TABLE `petugas_kesehatan` (
   `nama` varchar(256) NOT NULL,
   `janatam` varchar(256) NOT NULL,
   `jam_kerja` varchar(256) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 -- --------------------------------------------------------
 
@@ -121,10 +122,19 @@ CREATE TABLE `petugas_kesehatan` (
 
 CREATE TABLE `rekam_medis` (
   `id_rekam_medis` int(11) NOT NULL,
+  `id_pasien` int(15) NOT NULL,
   `tanggal_pemeriksaan` date NOT NULL,
   `diagnosa` varchar(256) NOT NULL,
   `hasil_laboratorium` varchar(256) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+--
+-- Dumping data for table `rekam_medis`
+--
+
+INSERT INTO `rekam_medis` (`id_rekam_medis`, `id_pasien`, `tanggal_pemeriksaan`, `diagnosa`, `hasil_laboratorium`) VALUES
+(4, 1, '2009-06-12', 'Sakit Hati', 'Bucin'),
+(5, 5, '2023-01-09', 'Badut', 'Beliau ini kocak gaming ygy');
 
 --
 -- Indexes for dumped tables
@@ -134,7 +144,8 @@ CREATE TABLE `rekam_medis` (
 -- Indexes for table `anamnesis`
 --
 ALTER TABLE `anamnesis`
-  ADD PRIMARY KEY (`id_anamnesis`);
+  ADD PRIMARY KEY (`id_anamnesis`),
+  ADD KEY `id_pasien` (`id_pasien`);
 
 --
 -- Indexes for table `dokter`
@@ -170,7 +181,8 @@ ALTER TABLE `petugas_kesehatan`
 -- Indexes for table `rekam_medis`
 --
 ALTER TABLE `rekam_medis`
-  ADD PRIMARY KEY (`id_rekam_medis`);
+  ADD PRIMARY KEY (`id_rekam_medis`),
+  ADD KEY `id_pasien` (`id_pasien`);
 
 --
 -- AUTO_INCREMENT for dumped tables
@@ -216,7 +228,23 @@ ALTER TABLE `petugas_kesehatan`
 -- AUTO_INCREMENT for table `rekam_medis`
 --
 ALTER TABLE `rekam_medis`
-  MODIFY `id_rekam_medis` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id_rekam_medis` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
+
+--
+-- Constraints for dumped tables
+--
+
+--
+-- Constraints for table `anamnesis`
+--
+ALTER TABLE `anamnesis`
+  ADD CONSTRAINT `anamnesis_ibfk_1` FOREIGN KEY (`id_pasien`) REFERENCES `pasien` (`id_pasien`);
+
+--
+-- Constraints for table `rekam_medis`
+--
+ALTER TABLE `rekam_medis`
+  ADD CONSTRAINT `rekam_medis_ibfk_1` FOREIGN KEY (`id_pasien`) REFERENCES `pasien` (`id_pasien`);
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;

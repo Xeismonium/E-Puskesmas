@@ -14,6 +14,9 @@
             ID
           </th>
           <th scope="col" class="px-6 py-3">
+            Nama
+          </th>
+          <th scope="col" class="px-6 py-3">
             Riwayat Penyakit
           </th>
           <th scope="col" class="px-6 py-3">
@@ -30,8 +33,7 @@
       </thead>
       <tbody>
         <?php
-
-        $query = 'SELECT * FROM anamnesis';
+        $query = 'SELECT anam.*, p.nama FROM anamnesis anam INNER JOIN pasien p ON anam.id_pasien = p.id_pasien';
         $result = mysqli_query($conn, $query);
         if ($result) {
           while ($row = mysqli_fetch_array($result)) { ?>
@@ -39,6 +41,9 @@
               <th scope="row" class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
                 <?= $row['id_anamnesis']; ?>
               </th>
+              <td class="px-6 py-4">
+                <?= $row['nama']; ?>
+              </td>
               <td class="px-6 py-4">
                 <?= $row['riwayat_penyakit']; ?>
               </td>
