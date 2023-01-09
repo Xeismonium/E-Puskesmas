@@ -170,7 +170,7 @@ if (isset($_POST['insert-obat'])) {
 
 if (isset($_POST['insert-dokter'])) {
     $nama_dokter = htmlspecialchars(trim($_POST['nama_dokter']));
-    $spesialis = htmlspecialchars(trim($_POST['spesialis']));
+    $spesialisasi = htmlspecialchars(trim($_POST['spesialisasi']));
     $jam_kerja = htmlspecialchars(trim($_POST['jam_kerja']));
 
     if (empty($nama_dokter)) {
@@ -189,7 +189,7 @@ if (isset($_POST['insert-dokter'])) {
         </script>
         ";
     } else {
-        mysqli_query($conn, "INSERT INTO dokter (nama_dokter, spesialis, jam_kerja) VALUES ('$nama_dokter', '$spesialis', '$jam_kerja')");
+        mysqli_query($conn, "INSERT INTO dokter (nama_dokter, spesialisasi, jam_kerja) VALUES ('$nama_dokter', '$spesialisasi', '$jam_kerja')");
         echo "
         <script>
         setTimeout(function() {

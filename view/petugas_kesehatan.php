@@ -2,63 +2,83 @@
 <?php include 'layouts/top_link.php'; ?>
 <?php include 'layouts/navbar.php'; ?>
 
-<main
-      class="w-full max-screen-xl max-w-6xl mt-4 mb-4 mx-auto p-4 bg-white border border-gray-200 rounded-lg shadow-md sm:p-6 md:p-8 dark:bg-gray-800 dark:border-gray-700"
-    >
-      <form>
-        <div class="mb-6">
-          <label
-            for="nama_petugas"
-            class="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
-            >Nama Petugas</label
-          >
-          <input
-            type="text"
-            id="nama_petugas"
-            class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-            placeholder="Jhon Doe"
-            required
-          />
-        </div>
-        <div class="mb-6">
-          <label
-            for="jabatan"
-            class="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
-            >Jabatan</label
-          >
-          <input
-            type="text"
-            id="jataban"
-            class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-            placeholder="Kasir"
-            required
-          />
-        </div>
-        <div class="mb-6">
-          <label
-            for="jam_kerja"
-            class="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
-            >Jam Kerja</label
-          >
-          <input
-            type="time"
-            id="jam_kerja"
-            class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-            placeholder=""
-            required
-          />
-        </div>
+<main class="w-full max-screen-xl max-w-6xl mt-4 mb-4 mx-auto p-4 bg-white border border-gray-200 rounded-lg shadow-md sm:p-6 md:p-8 dark:bg-gray-800 dark:border-gray-700">
+  <a href="inputPetugas_kesehatan.php" type="button" class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm w-full sm:w-auto px-5 mb-4 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">
+    + Petugas Kesehatan
+  </a>
+  <div class="relative overflow-x-auto shadow-md sm:rounded-lg">
+    <table class="rounded w-full text-sm text-left text-gray-500 dark:text-gray-400">
+      <thead class="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
+        <tr>
+          <th scope="col" class="px-6 py-3">
+            ID
+          </th>
+          <th scope="col" class="px-6 py-3">
+            Nama Petugas Kesehatan
+          </th>
+          <th scope="col" class="px-6 py-3">
+            Jabatan
+          </th>
+          <th scope="col" class="px-6 py-3">
+            Jam Kerja
+          </th>
+          </th>
+          <th scope="col" class="px-6 py-3">
+            Action
+          </th>
+        </tr>
+      </thead>
+      <tbody>
+        <?php
+
+        $query = 'SELECT * FROM petugas_kesehatan';
+        $result = mysqli_query($conn, $query);
+        if ($result) {
+          while ($row = mysqli_fetch_array($result)) { ?>
+            <tr class="bg-white border-b dark:bg-gray-900 dark:border-gray-700">
+              <th scope="row" class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
+                <?= $row['id_petugas_kesehatan']; ?>
+              </th>
+              <td class="px-6 py-4">
+                <?= $row['nama_petugas_kesehatan']; ?>
+              </td>
+              <td class="px-6 py-4">
+                <?= $row['jabatan']; ?>
+              </td>
+              <td class="px-6 py-4">
+                <?= $row['jam_kerja']; ?>
+              </td>
+              <th class="px-6 py-4">
+                <form action="POST">
+                  <a href="updatePetugas_kesehatan.php?id_petugas_kesehatan=<?= $row['id_petugas_kesehatan']; ?>" class="font-medium text-blue-600 dark:text-blue-500 hover:underline">Edit</a>
+                  |
+                  <button type='button' id='id_petugas_kesehatan<?= $row['id_petugas_kesehatan'] ?>' class="text-orange-500">Delete
+                  </button>
+                </form>
+              </th>
+            </tr>
+            <script>
+              var button = document.querySelector('#id_petugas_kesehatan<?= $row['id_petugas_kesehatan'] ?>');
+              button.onclick = function() {
+                Swal.fire({
+                  title: 'Peringatan!',
+                  text: "Hapus Data?",
+                  icon: 'warning',
+                  showCancelButton: true,
+                  confirmButtonText: 'Confirm'
+                }).then((result) => {
+                  if (result.isConfirmed) {
+                    document.location.href = 'backend/delete.php?id_petugas_kesehatan=<?= $row['id_petugas_kesehatan'] ?>';
+                  }
+                })
+              }
+            </script>
+        <?php }
+        } ?>
+      </tbody>
+    </table>
+  </div>
+</main>
 
 
-        <button
-          type="submit"
-          class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm w-full sm:w-auto px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"
-        >
-          Submit
-        </button>
-        
-      </form>
-    </main>
-
-  <?php include 'layouts/bottom_link.php'; ?>
- 
+<?php include 'layouts/bottom_link.php'; ?>

@@ -178,11 +178,11 @@ if (isset($_POST['update-obat'])) {
 
 if (isset($_POST['update-dokter'])) {
     $id = htmlspecialchars(trim($_POST['id_dokter']));
-    $nama = htmlspecialchars(trim($_POST['nama']));
-    $spesialis = htmlspecialchars(trim($_POST['spesialis']));
+    $nama_dokter = htmlspecialchars(trim($_POST['nama_dokter']));
+    $spesialisasi = htmlspecialchars(trim($_POST['spesialisasi']));
     $jam_kerja = htmlspecialchars(trim($_POST['jam_kerja']));
 
-    if (empty($nama_obat) || empty($harga) || empty($efek_samping)) {
+    if (empty($nama_dokter) || empty($spesialisasi) || empty($jam_kerja)) {
         echo "
         <script>
         setTimeout(function() {
@@ -198,7 +198,7 @@ if (isset($_POST['update-dokter'])) {
         </script>
         ";
     } else {
-        $queryUpdate = "UPDATE dokter SET nama = '$nama', spesialis = '$spesialis', jam_kerja = '$jam_kerja' WHERE id_dokter = $id";
+        $queryUpdate = "UPDATE dokter SET nama_dokter = '$nama_dokter', spesialisasi = '$spesialisasi', jam_kerja = '$jam_kerja' WHERE id_dokter = $id";
         $resultUpdate = mysqli_query($conn, $queryUpdate);
         echo "
         <script>
@@ -221,11 +221,11 @@ if (isset($_POST['update-dokter'])) {
 
 if (isset($_POST['update-petugas-kesehatan'])) {
     $id = htmlspecialchars(trim($_POST['id_petugas_kesehatan']));
-    $nama = htmlspecialchars(trim($_POST['nama']));
+    $nama = htmlspecialchars(trim($_POST['nama_petugas_kesehatan']));
     $jabatan = htmlspecialchars(trim($_POST['jabatan']));
     $jam_kerja = htmlspecialchars(trim($_POST['jam_kerja']));
 
-    if (empty($nama_obat) || empty($harga) || empty($efek_samping)) {
+    if (empty($nama) || empty($jabatan) || empty($jam_kerja)) {
         echo "
         <script>
         setTimeout(function() {
@@ -241,7 +241,7 @@ if (isset($_POST['update-petugas-kesehatan'])) {
         </script>
         ";
     } else {
-        $queryUpdate = "UPDATE petugas_kesehatan SET nama = '$nama', jabatan = '$jabatan', jam_kerja = '$jam_kerja' WHERE id_petugas_kesehatan = $id";
+        $queryUpdate = "UPDATE petugas_kesehatan SET nama_petugas_kesehatan = '$nama', jabatan = '$jabatan', jam_kerja = '$jam_kerja' WHERE id_petugas_kesehatan = $id";
         $resultUpdate = mysqli_query($conn, $queryUpdate);
         echo "
         <script>
@@ -268,7 +268,7 @@ if (isset($_POST['update-anamnesis'])) {
     $obat_dikonsumsi = htmlspecialchars(trim($_POST['obat_dikonsumsi']));
     $alergi_obat = htmlspecialchars(trim($_POST['alergi_obat']));
 
-    if (empty($nama_obat) || empty($harga) || empty($efek_samping)) {
+    if (empty($riwayat_penyakit) || empty($obat_dikonsumsi) || empty($alergi_obat)) {
         echo "
         <script>
         setTimeout(function() {
@@ -284,7 +284,7 @@ if (isset($_POST['update-anamnesis'])) {
         </script>
         ";
     } else {
-        $queryUpdate = "UPDATE dokter SET anamnesis = '$riwayat_penyakit', obat_dikonsumsi = '$obat_dikonsumsi', alergi_obat = '$alergi_obat' WHERE id_anamnesis = $id";
+        $queryUpdate = "UPDATE anamnesis SET riwayat_penyakit = '$riwayat_penyakit', obat_dikonsumsi = '$obat_dikonsumsi', alergi_obat = '$alergi_obat' WHERE id_anamnesis = $id";
         $resultUpdate = mysqli_query($conn, $queryUpdate);
         echo "
         <script>
