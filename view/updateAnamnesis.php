@@ -7,9 +7,14 @@
         <?php
         require '../config/connect.php';
         $idAnamnesis = $_GET['id_anamnesis'];
-        $getAnamnesis = mysqli_query($conn, "SELECT * FROM anamnesis WHERE id_anamnesis = '$idAnamnesis'");
+        $getAnamnesis = mysqli_query($conn, "SELECT anam.*, p.nama FROM anamnesis anam INNER JOIN pasien p ON anam.id_pasien = p.id_pasien WHERE id_anamnesis = '$idAnamnesis'");
+
         $dataAnamnesis = mysqli_fetch_array($getAnamnesis);
         ?>
+        <div class="mb-6">
+            <label for="name" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Nama</label>
+            <input value="<?= $dataAnamnesis['nama'] ?>" type="text" name="name" id="name" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" required readonly />
+        </div>
         <div class="mb-6">
             <input name="id_anamnesis" value="<?= $dataAnamnesis['id_anamnesis']; ?>" hidden>
             <label for="riwayat_penyakit" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Riwayat Penyakit
